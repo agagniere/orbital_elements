@@ -33,7 +33,7 @@ pub fn build(b: *std.Build) !void {
     b.getInstallStep().dependOn(&generated.step);
 
     const utils = b.addModule("utilz", .{
-        .root_source_file = b.path("root.zig"),
+        .root_source_file = b.path("src/root.zig"),
         .target = target,
         .optimize = optimize,
     });
@@ -44,7 +44,7 @@ pub fn build(b: *std.Build) !void {
 
     const exe = b.addExecutable(.{
         .name = "ublox_dumper",
-        .root_source_file = b.path("main.zig"),
+        .root_source_file = b.path("src/main.zig"),
         .target = target,
         .optimize = optimize,
     });

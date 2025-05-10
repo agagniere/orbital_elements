@@ -34,6 +34,7 @@ pub fn foo(raw: RawEphemeris) void {
     const true_anomaly: rad = .init(std.math.atan2(sinv, cosv));
 
     const argument_of_latitude: rad = true_anomaly.add(raw.argument_of_perigee.to(rad));
+    _ = argument_of_latitude;
 }
 
 pub fn solve_kepler_equation(comptime epsilon: f64, eccentricity: f64, mean_anomaly: rad) rad {

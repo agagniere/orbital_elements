@@ -1,5 +1,5 @@
 .{
-    .name = .ephemerides_utilities,
+    .name = .orbital_elements,
     .version = "0.0.0",
     .dependencies = .{
         .ublox_parser = .{
@@ -35,5 +35,5 @@
         "ublox_loop.zig",
         "ephemeris.zig",
     },
-    .fingerprint = 0xeb6f1054c564ecb2,
+    .fingerprint = 0xe05110f9101dace7,
 }
