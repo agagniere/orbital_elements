@@ -30,10 +30,11 @@
     .paths = .{
         "build.zig",
         "build.zig.zon",
-        "root.zig",
-        "bit_reader.zig",
-        "ublox_loop.zig",
-        "ephemeris.zig",
+        "src/root.zig",
+        "src/bit_reader.zig",
+        "src/ublox_loop.zig",
+        "src/ephemeris.zig",
+        "src/main.zig",
     },
     .fingerprint = 0xe05110f9101dace7,
 }
