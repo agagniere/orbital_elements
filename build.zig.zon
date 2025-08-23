@@ -1,30 +1,32 @@
 .{
     .name = .orbital_elements,
     .version = "0.0.0",
+    .minimum_zig_version = "0.15.1",
+
     .dependencies = .{
         .ublox_parser = .{
-            .url = "git+https://github.com/Orolia2s/ublox_parser?ref=master#3075fb07c8f2f268b16abd056e0157b08f385165",
-            .hash = "ublox_parser-0.2.1-PxZKDEvUAAAEYD1z3UWj-lCB1MIure593LNE2vkg43TJ",
+            .url = "git+https://github.com/Orolia2s/ublox_parser?ref=master#9a1d9f2c0835e13c8a4f57c400013ef2e2f7cbe8",
+            .hash = "ublox_parser-0.2.2-PxZKDF_XAAAAOSc0xaJsa5vi1W_Kx_aFyjpvDQdiRqnv",
         },
         .libo2s = .{
-            .url = "git+https://github.com/Orolia2s/libo2s?ref=master#4f8d0d34273e18f8ba5abdfc74be89734ad14688",
-            .hash = "libo2s-1.8.1-fUXQWD1fAgDOam8NRqokrgW9_cOwbwxXZoF-8SOpyfPe",
+            .url = "git+https://github.com/Orolia2s/libo2s?ref=master#5cbc45755c40707841e1e74de7112908f5e3d1c0",
+            .hash = "libo2s-1.8.2-fUXQWKtiAgCIK_e5V5W97nuHHyvXS8GO04jJtTH5ZLzv",
         },
         .blackmagic = .{
-            .url = "git+https://github.com/agagniere/blackmagic?ref=master#e1e8feeaab0bc6eec7e3756f2b6af5f611f23927",
-            .hash = "blackmagic-0.3.3-62-rPPPjAACHWzrF2rm5xTx7dHpRs1jVi-EO-2uVutA9",
+            .url = "git+https://github.com/agagniere/blackmagic?ref=master#b6f0922c7a1e9ffbb082fc01b4f8cf222e443548",
+            .hash = "blackmagic-0.4.0-62-rPNntAABzfbIiwdzai4Eh0k21ntNsipTlnXHR2o9c",
         },
         .args = .{
-            .url = "git+https://github.com/ikskuh/zig-args?ref=master#9425b94c103a031777fdd272c555ce93a7dea581",
-            .hash = "args-0.0.0-CiLiqv_NAAC97fGpk9hS2K681jkiqPsWP6w3ucb_ctGH",
+            .url = "git+https://github.com/ikskuh/zig-args?ref=master#8ae26b44a884ff20dca98ee84c098e8f8e94902f",
+            .hash = "args-0.0.0-CiLiqojRAACGzDRO7A9dw7kWSchNk29caJZkXuMCb0Cn",
         },
         .ansi_term = .{
-            .url = "git+https://github.com/ziglibs/ansi_term?ref=master#c0e6ad093d4f6a9ed4e65d962d1e53b97888f989",
+            .url = "git+https://github.com/ziglibs/ansi_term?ref=master#73b7efddb1d871d7a3528e63bd391d202fb66128",
             .hash = "ansi_term-0.1.0-_baAywpoAABEqsPmS5Jz_CddDCrG8qdIyRIESH8D2fzd",
         },
         .unitz = .{
-            .url = "git+https://github.com/agagniere/unitz?ref=master#4a07ae5d4d1d3c38be3a9ef5ebc622851f057ca5",
-            .hash = "unitz-0.1.0-SkAk5IBwAADftk39UmGHAx3KeAlHWMdYkENGJW6mJJuF",
+            .url = "git+https://github.com/agagniere/unitz?ref=master#c3b8d99f27b392fadfab6e40320d404bee799b57",
+            .hash = "unitz-0.1.0-SkAk5JFxAAC0PzF0l3zQ5b9a4wCEY7N02xFAstoJbs-3",
         },
     },
     .paths = .{

@@ -34,20 +34,25 @@ const Options = struct {
     };
 };
 
-var buffered_out = std.io.bufferedWriter(std.io.getStdOut().writer());
-const out = buffered_out.writer();
+var stdout_buffer: [512]u8 = undefined;
+var stdout = std.fs.File.stdout().writer(&stdout_buffer);
+const out = &stdout.interface;
 
-var gpa_instance: std.heap.GeneralPurposeAllocator(.{}) = .{};
+var gpa_instance: std.heap.DebugAllocator(.{}) = .{};
 const gpa = gpa_instance.allocator();
 
-pub fn main() !void {
-    const options = try argsParser.parseForCurrentProcess(Options, gpa, .print);
+fn log_error(err: argsParser.Error) !void {
+    std.log.scoped(.cli).err("{f}", .{err});
+}
+
+pub fn main() !u8 {
+    const options = argsParser.parseForCurrentProcess(Options, gpa, .{ .forward = log_error }) catch return 1;
     defer options.deinit();
+    defer out.flush() catch unreachable;
 
     if (options.options.help) {
         try argsParser.printHelp(Options, "ublox dumper", out);
-        try buffered_out.flush();
-        return;
+        return 0;
     }
 
     for (options.positionals) |arg| {
@@ -58,7 +63,7 @@ pub fn main() !void {
         }
     }
     try out.writeByte('\n');
-    try buffered_out.flush();
+    return 0;
 }
 
 fn get_callback(mode: Mode) utils.UbloxCallback {
@@ -70,7 +75,7 @@ fn get_callback(mode: Mode) utils.UbloxCallback {
     };
 }
 
-fn c_dump_header(message: [*c]o2s.ublox_message_t) callconv(.C) void {
+fn c_dump_header(message: [*c]o2s.ublox_message_t) callconv(.c) void {
     dump_header(message) catch unreachable;
 }
 fn dump_header(message: *o2s.ublox_message_t) !void {
@@ -80,10 +85,10 @@ fn dump_header(message: *o2s.ublox_message_t) !void {
     try out.writeByte('{');
     try out.print("{s}", .{o2s.string_to_cstring(&string)});
     try out.writeAll("}\n---\n");
-    try buffered_out.flush();
+    try out.flush();
 }
 
-fn c_dump_message(message: [*c]o2s.ublox_message_t) callconv(.C) void {
+fn c_dump_message(message: [*c]o2s.ublox_message_t) callconv(.c) void {
     dump_message(message) catch unreachable;
 }
 fn dump_message(message: *o2s.ublox_message_t) !void {
@@ -108,12 +113,12 @@ fn dump_message(message: *o2s.ublox_message_t) !void {
     try out.writeByte('{');
     try out.print("{s}", .{o2s.string_to_cstring(&string)});
     try out.writeAll("}\n---\n");
-    try buffered_out.flush();
+    try out.flush();
 }
 
 var constellation_count: std.AutoArrayHashMapUnmanaged(o2s.ublox_constellation, u32) = .empty;
 
-fn c_count_constellations(message: [*c]o2s.ublox_message_t) callconv(.C) void {
+fn c_count_constellations(message: [*c]o2s.ublox_message_t) callconv(.c) void {
     if (message.*.ublox_class != o2s.RXM or message.*.type != o2s.SFRBX)
         return;
     count_constellations(@ptrCast(message)) catch unreachable;
@@ -130,12 +135,12 @@ fn count_constellations(subframe: *o2s.struct_ublox_navigation_data) !void {
         try terminal.format.updateStyle(out, .{ .font_style = .{ .bold = entry.key_ptr.* == subframe.constellation } }, null);
         try out.print("{s}: {}  ", .{ o2s.ublox_constellation_to_cstring(entry.key_ptr.*), entry.value_ptr.* });
     }
-    try buffered_out.flush();
+    try out.flush();
 }
 
 var satellite_count: std.AutoArrayHashMapUnmanaged(o2s.ublox_constellation, std.AutoArrayHashMapUnmanaged(u8, u32)) = .empty;
 
-fn c_count_satellite(message: [*c]o2s.ublox_message_t) callconv(.C) void {
+fn c_count_satellite(message: [*c]o2s.ublox_message_t) callconv(.c) void {
     if (message.*.ublox_class != o2s.RXM or message.*.type != o2s.SFRBX)
         return;
     count_satellite(@ptrCast(message)) catch unreachable;
@@ -169,5 +174,5 @@ fn count_satellite(subframe: *o2s.struct_ublox_navigation_data) !void {
         try terminal.format.updateStyle(out, .{ .font_style = .{ .underline = true } }, null);
         try out.print("{s:<16}", .{o2s.ublox_constellation_to_cstring(constellation.key_ptr.*)});
     }
-    try buffered_out.flush();
+    try out.flush();
 }

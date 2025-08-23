@@ -1,7 +1,7 @@
 const std = @import("std");
 const o2s = @import("o2s");
 
-pub const UbloxCallback = *const fn (message: [*c]o2s.ublox_message_t) callconv(.C) void;
+pub const UbloxCallback = *const fn (message: [*c]o2s.ublox_message_t) callconv(.c) void;
 
 const ReadUbloxOptions = struct {
     /// If this is true, the stream will be considered infinite, and the port will be configured
@@ -23,7 +23,7 @@ pub fn read_ublox_from(path: [:0]const u8, options: ReadUbloxOptions) !void {
     var file: *o2s.ifstream_t = undefined;
 
     if (options.is_serial_port) {
-        file = @alignCast(@ptrCast(serial_new_readwrite(path)));
+        file = @ptrCast(@alignCast(serial_new_readwrite(path)));
     } else {
         file = try std.heap.c_allocator.create(o2s.ifstream_t);
         file.* = o2s.file_open(path, o2s.O_RDONLY);
@@ -48,7 +48,7 @@ pub fn read_ublox_from(path: [:0]const u8, options: ReadUbloxOptions) !void {
         return error.UnableToStartTimer;
 }
 
-fn default_callback(c_message: [*c]o2s.ublox_message_t) callconv(.C) void {
+fn default_callback(c_message: [*c]o2s.ublox_message_t) callconv(.c) void {
     const message: *o2s.ublox_message_t = c_message;
     var string: o2s.string_t = o2s.ublox_header_tostring(message);
     defer o2s.string_clear(&string);
