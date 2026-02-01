@@ -5,12 +5,12 @@
 
     .dependencies = .{
         .ublox_parser = .{
-            .url = "git+https://github.com/Orolia2s/ublox_parser?ref=master#9a1d9f2c0835e13c8a4f57c400013ef2e2f7cbe8",
-            .hash = "ublox_parser-0.2.2-PxZKDF_XAAAAOSc0xaJsa5vi1W_Kx_aFyjpvDQdiRqnv",
+            .url = "git+https://github.com/agagniere/ublox_parser?ref=master#d706dda96fb0de43bec6ec69a10967f2e73cbbc2",
+            .hash = "ublox_parser-0.2.2-PxZKDF_XAAAUowDK0H6ST_A8zacYnX13wPynAqRZ_0iv",
         },
         .libo2s = .{
-            .url = "git+https://github.com/Orolia2s/libo2s?ref=master#5cbc45755c40707841e1e74de7112908f5e3d1c0",
-            .hash = "libo2s-1.8.2-fUXQWKtiAgCIK_e5V5W97nuHHyvXS8GO04jJtTH5ZLzv",
+            .url = "git+https://github.com/Orolia2s/libo2s?ref=master#f15af1b2ec41c1818aabd8b583f7e669b0295e75",
+            .hash = "libo2s-1.8.2-fUXQWMJiAgAJZMbeb8GW1CSdGZvYMW7MIC-rQqi9ddp_",
         },
         .blackmagic = .{
             .url = "git+https://github.com/agagniere/blackmagic?ref=master#b6f0922c7a1e9ffbb082fc01b4f8cf222e443548",
